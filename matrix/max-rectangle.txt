@@ -1,0 +1,62 @@
+method -1
+class Solution{
+    vector<int> getNextSmaller(vector<int>& heights, int n) {
+        stack<int> st;
+        vector<int> ans(n);
+        for(int i=n-1;i>=0;i--){
+            int val = heights[i];
+            while(!st.empty() && heights[st.top()]>=val){
+                st.pop();
+            }
+            if(st.empty()) ans[i]=n;
+            else ans[i] = st.top();
+            st.push(i);
+        }
+        return ans;
+    } 
+    
+    vector<int> getPrevSmaller(vector<int>& heights, int n) {
+        stack<int> st;
+        vector<int> ans(n);
+        for(int i=0;i<n;i++){
+            int val = heights[i];
+            while(!st.empty() && heights[st.top()]>=val){
+                st.pop();
+            }
+            if(st.empty()) ans[i]=-1;
+            else ans[i] = st.top();
+            st.push(i);
+        }
+        return ans;
+    }
+    
+    int getMaxArea(vector<int>& heights,int n) {
+        int ans = 0;
+        vector<int> prev,next;
+        prev = getPrevSmaller(heights,n);
+        next = getNextSmaller(heights,n);
+        for(int i=0;i<n;i++){
+            int area = (next[i]-prev[i]-1)*heights[i];
+            ans = max(ans,area);
+        }
+        return ans;
+    }
+  public:
+    int maxArea(int M[MAX][MAX], int n, int m) {
+        // Your code here
+        int ans = 0;
+        vector<int> temp(m,0);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(M[i][j]==0) temp[j]=0;
+                else temp[j]+=M[i][j];
+            }
+            int area = getMaxArea(temp,m);
+            ans = max(ans,area);
+        }
+        return ans;
+    }
+};
+
+TC - O(n*m);
+SC - O(m);

@@ -1,0 +1,22 @@
+vector<int> factorial(int N){
+    // code here
+    vector<int> ans;
+    ans.push_back(1);
+    for(long long i=2;i<=N;i++){
+        long long carry = 0;
+        for(long long j=0;j<ans.size();j++){
+            long long val = i*ans[j]+carry;
+            ans[j]=val%10;
+            carry=val/10;
+        }
+        while(carry!=0){
+            ans.push_back(carry%10);
+            carry/=10;
+        }
+    }
+    reverse(ans.begin(),ans.end());
+    return ans;
+}
+
+TC - O(n^2);
+SC - O(1);

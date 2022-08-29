@@ -1,0 +1,38 @@
+method -1
+int solve(vector<int>& nums,int k,int idx,int space){
+    if(idx==nums.size()) return 0;
+    int cost = (space+1)*(space+1);
+    if(nums[idx]<=space){
+        return min(solve(nums,k,idx+1,space-nums[idx]-1),cost+solve(nums,k,idx+1,k-nums[idx]-1));
+    }
+    return cost+solve(nums,k,idx+1,k-nums[idx]-1);
+}
+public:
+int solveWordWrap(vector<int>nums, int k) { 
+    // Code here
+    return solve(nums,k,0,k);
+}
+
+TC - O(2^n);
+SC - O(n);
+
+method -2
+int solve(vector<int>& nums,int k,int idx,int space,vector<vector<int>>& dp){
+    if(idx==nums.size()) return 0;
+    if(dp[idx][space+1]!=-1) return dp[idx][space+1];
+    int cost = (space+1)*(space+1);
+    if(nums[idx]<=space){
+        return dp[idx][space+1] = min(solve(nums,k,idx+1,space-nums[idx]-1,dp),cost+solve(nums,k,idx+1,k-nums[idx]-1,dp));
+    }
+    return dp[idx][space+1] = cost+solve(nums,k,idx+1,k-nums[idx]-1,dp);
+}
+public:
+int solveWordWrap(vector<int>nums, int k) { 
+    // Code here
+    int n = nums.size();
+    vector<vector<int>> dp(n+1,vector<int>(k+2,-1));
+    return solve(nums,k,0,k,dp);
+}
+
+TC - O(n^2);
+SC - O(n^2);

@@ -1,0 +1,14 @@
+int doUnion(int a[], int n, int b[], int m)  {
+    //code here
+    set<int> ans;
+    for(int i=0;i<n;i++){
+        ans.insert(a[i]);
+    }
+    for(int i=0;i<m;i++){
+        ans.insert(b[i]);
+    }
+    return ans.size();
+}
+
+TC - O(n+m);
+SC - O(n+m);

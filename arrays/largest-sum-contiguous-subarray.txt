@@ -1,0 +1,34 @@
+method -1
+long long maxSubarraySum(int arr[], int n){
+    // Your code here
+    long long ans = arr[0];
+    for(int i=0;i<n;i++){
+        long long sum = 0;
+        for(int j=i;j<n;j++){
+            sum+=arr[j];
+            ans=max(ans,sum);
+        }
+    }
+    return ans;
+}
+
+TC - O(n^2);
+SC - O(1);
+
+method -2: Kadane's algorithm
+long long maxSubarraySum(int arr[], int n){
+    // Your code here
+    long long ans = INT_MIN;
+    long long curr = 0;
+    for(int i=0;i<n;i++){
+        curr+=arr[i];
+        ans=max(ans,curr);
+        if(curr<0){
+            curr=0;
+        }
+    }
+    return ans;
+}
+
+TC - O(n);
+SC - O(1);

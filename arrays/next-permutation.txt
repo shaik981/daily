@@ -1,0 +1,67 @@
+method -1
+void nextPermutation(vector<int>& nums) {
+    next_permutation(nums.begin(),nums.end());
+}
+
+method -2
+void permute(int p,vector<int>& arr,vector<vector<int>>& res){
+    if(p==arr.size()){
+        res.push_back(arr);
+        return;
+    }
+    for(int i=p;i<arr.size();i++){
+        swap(arr[i],arr[p]);
+        permute(p+1,arr,res);
+        swap(arr[i],arr[p]);
+    }
+}
+void nextPermutation(vector<int>& nums) {
+    vector<vector<int>> res;
+    vector<int> arr = nums;
+    permute(0,arr,res);
+    set<vector<int>> s;
+    for(auto x: res){
+        s.insert(x);
+    }
+    auto it=s.find(nums);
+    if(it==(--s.end())){
+        it=s.begin();
+        nums=*it;
+    }
+    else{
+        it++;
+        nums=*it;
+    }
+}
+
+TC - O(n*n!);
+SC - O(n!);
+
+method -2
+void nextPermutation(vector<int>& nums) {
+    int n=nums.size();
+    int idx=INT_MAX;
+    for(int i=n-2;i>=0;i--){
+        if(nums[i]<nums[i+1]){
+            idx=i;
+            break;
+        }
+    }
+    if(idx==INT_MAX){
+        reverse(nums.begin(),nums.end());
+        return;
+    }
+    int idx2;
+    for(int i=n-1;i>=0;i--){
+        if(nums[i]>nums[idx]){
+            idx2=i;
+            break;
+        }
+    }
+    swap(nums[idx],nums[idx2]);
+    reverse(nums.begin()+idx+1,nums.end());
+    return;
+}
+
+TC - O(n);
+SC - O(1);

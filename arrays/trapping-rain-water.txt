@@ -1,0 +1,60 @@
+method -1
+long long trappingWater(int arr[], int n){
+    // code here
+    vector<int> suffix(n),preffix(n);
+    suffix[n-1]=arr[n-1];
+    preffix[0]=arr[0];
+    for(int i=1;i<n;i++) preffix[i]=max(preffix[i-1],arr[i]);
+    for(int i=n-2;i>=0;i--) suffix[i]=max(suffix[i+1],arr[i]);
+    long long water = 0;
+    for(int i=0;i<n;i++){
+        water+=min(preffix[i],suffix[i])-arr[i];
+    }
+    return water;
+}
+
+TC - O(n);
+SC - O(n);
+
+optimized
+long long trappingWater(int arr[], int n){
+    // code here
+    vector<int> suffix(n);
+    suffix[n-1]=arr[n-1];
+    for(int i=n-2;i>=0;i--) suffix[i]=max(suffix[i+1],arr[i]);
+    long long water = 0;
+    int preffix = arr[0];
+    for(int i=0;i<n;i++){
+        preffix=max(preffix,arr[i]);
+        water+=min(preffix,suffix[i])-arr[i];
+    }
+    return water;
+}
+
+method -2
+long long trappingWater(int arr[], int n){
+    // code here
+    int leftMax = 0,rightMax = 0,l = 0,r = n-1;
+    long long water = 0;
+    while(l<=r){
+        if(arr[l]<=arr[r]){
+            if(arr[l]<=leftMax){
+                water+=leftMax - arr[l];
+            }else{
+                leftMax = arr[l];
+            }
+            l++;
+        }else{
+            if(arr[r]<=rightMax){
+                water+=rightMax - arr[r];
+            }else{
+                rightMax = arr[r];
+            }
+            r--;
+        }
+    }
+    return water;
+}
+
+TC - O(n);
+SC - O(1);

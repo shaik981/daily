@@ -1,0 +1,29 @@
+method -1
+brute force two for loops
+
+TC - O(n^k);
+SC - O(1);
+
+method -2
+vector<long long> printFirstNegativeInteger(long long int A[],long long int N, long long int K) {
+    queue<int> q;
+    long long int i=0,j=0;
+    vector<long long> ans;
+    while(j<N){
+        if(A[j]<0) q.push(A[j]);
+        if(j-i+1==K){
+            if(!q.empty()){
+                ans.push_back(q.front());
+                if(A[i]==q.front()) q.pop();
+            }else{
+                ans.push_back(0);
+            }
+            i++;
+        }
+        j++;
+    }
+    return ans;
+}
+
+TC - O(n);
+SC - O(k);

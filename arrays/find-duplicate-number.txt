@@ -1,0 +1,43 @@
+method -1
+int findDuplicate(vector<int>& nums) {
+    int n = nums.size();
+    sort(nums.begin(),nums.end());
+    for(int i=0;i<n-1;i++){
+        if(nums[i]==nums[i+1]) return nums[i];
+    }
+    return -1;
+}
+
+TC - O(nlogn);
+SC - O(1);
+
+method -2
+int findDuplicate(vector<int>& nums) {
+    int n = nums.size();
+    unordered_map<int,int> um;
+    for(int i=0;i<n;i++){
+        if(um.find(nums[i])!=um.end()) return nums[i];
+        um[nums[i]]++;
+    }
+    return -1;
+}
+
+TC - O(n);
+SC - O(n);
+
+method -3
+int findDuplicate(vector<int>& nums) {
+    int n = nums.size();
+    for(int i=0;i<n;i++){
+        int idx = nums[i]%n;
+        nums[idx]+=n;
+    }
+    for(int i=0;i<n;i++){
+        if(nums[i]/n>1) return i;
+    }
+    return -1;
+}
+
+TC - O(n);
+SC - O(1);
+

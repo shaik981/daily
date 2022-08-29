@@ -1,0 +1,11 @@
+pair<long long, long long> getMinMax(long long a[], int n) {
+    pair<long long,long long> ans={a[0],a[0]};
+    for(int i=1;i<n;i++){
+        ans.first=min(ans.first,a[i]);
+        ans.second=max(ans.second,a[i]);
+    }
+    return ans;
+}
+
+TC - O(n);
+SC - O(1);

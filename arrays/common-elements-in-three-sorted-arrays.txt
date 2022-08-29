@@ -1,0 +1,42 @@
+method -1
+vector <int> commonElements (int A[], int B[], int C[], int n1, int n2, int n3){
+    //code here.
+    vector<int> ans;
+    set<int> s1,s2;
+    for(int i=0;i<n1;i++) s1.insert(A[i]);
+    for(int i=0;i<n2;i++) s2.insert(B[i]);
+    for(int i=0;i<n3;i++){
+        if(s1.find(C[i])!=s1.end() && s2.find(C[i])!=s2.end()){
+            ans.push_back(C[i]);
+            s1.erase(C[i]);
+            s2.erase(C[i]);
+        }
+    }
+    return ans;
+}
+
+TC - O(n1+n2+n3);
+SC - O(n1+n2);
+
+method -2
+vector <int> commonElements (int A[], int B[], int C[], int n1, int n2, int n3){
+    //code here.
+    set<int> s;
+    int i=0,j=0,k=0;
+    while(i<n1 && j<n2 && k<n3){
+        if(A[i]<B[j]) i++;
+        if(A[i]<C[k]) i++;
+        if(B[j]<A[i]) j++;
+        if(B[j]<C[k]) j++;
+        if(C[k]<A[i]) k++;
+        if(C[k]<B[j]) k++;
+        if(A[i]==B[j] && B[j]==C[k]){
+            s.insert(A[i]);
+            i++;j++;k++;
+        }
+    }
+    return vector<int>(s.begin(),s.end());
+}
+
+TC - O(min(n1+n2+n3));
+SC - O(1);

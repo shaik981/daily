@@ -1,0 +1,51 @@
+method -1
+void solve(string S,set<string>& s,vector<int>& freq,int n,string ds){
+    if(ds.size()==n){
+        s.insert(ds);
+        return;
+    }
+    for(int i=0;i<n;i++){
+        if(!freq[i]){
+            ds.push_back(S[i]);
+            freq[i]=1;
+            solve(S,s,freq,n,ds);
+            freq[i]=0;
+            ds.pop_back();
+        }
+    }
+}
+public:
+vector<string>find_permutation(string S){
+    int n = S.size();
+    vector<int> freq(n,0);
+    set<string> s;
+    string ds;
+    solve(S,s,freq,n,ds);
+    return vector<string>(s.begin(),s.end());
+}
+
+TC - O(2^n);
+SC - O(n);
+
+method -2
+void solve(string S,int n,int idx,set<string>& s){
+    if(idx==n){
+        s.insert(S);
+        return;
+    }
+    for(int i=idx;i<n;i++){
+        swap(S[idx],S[i]);
+        solve(S,n,idx+1,s);
+        swap(S[idx],S[i]);
+    }
+}
+public:
+vector<string>find_permutation(string S){
+    int n = S.size();
+    set<string> s;
+    solve(S,n,0,s);
+    return vector<string>(s.begin(),s.end());
+}
+
+TC - O(2^n);
+SC - O(1);

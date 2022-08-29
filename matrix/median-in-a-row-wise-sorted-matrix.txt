@@ -1,0 +1,42 @@
+method -1
+int median(vector<vector<int>> &matrix, int r, int c){
+    // code here  
+    vector<int> res;
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            res.push_back(matrix[i][j]);
+        }
+    }
+    sort(res.begin(),res.end());
+    int n = res.size()/2;
+    return res[n];
+}
+
+TC - O(n*m)+O((n*m)log(n*m));
+SC - O(n*m);
+
+method -2
+int median(vector<vector<int>> &matrix, int r, int c){
+    // code here  
+    int n = r*c;
+    int startVal = 0,endVal = 2000,midVal;
+    while(startVal<=endVal){
+        midVal = (startVal+endVal)/2;
+        int ans = 0;
+        for(int i=0;i<r;i++){
+            int left=0,right=c-1;
+            while(left<=right){
+                int mid = (left+right);
+                if(matrix[i][mid]<=midVal) left=mid+1;
+                else right=mid-1;
+            }
+            ans+=left;
+        }
+        if(ans<=n/2) startVal=midVal+1;
+        else endVal=midVal-1;
+    }
+    return startVal;
+}
+
+TC - O(32 * R * log(C));
+SC - O(1);

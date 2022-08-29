@@ -1,0 +1,34 @@
+method -1
+bool subArrayExists(int arr[], int n)
+{
+    //Your code here
+    for(int i=0;i<n;i++){
+        int sum=0;
+        for(int j=i;j<n;j++){
+            sum+=arr[j];
+            if(sum==0) return true;
+        }
+    }
+    return false;
+}
+
+TC - O(n^2);
+SC - O(1);
+
+method -2
+bool subArrayExists(int arr[], int n)
+{
+    //Your code here
+    unordered_map<int,int> um;
+    um[0]++;
+    int sum=0;
+    for(int i=0;i<n;i++){
+        sum+=arr[i];
+        if(sum==0 || um.find(sum)!=um.end()) return true;
+        um[sum]++;
+    }
+    return false;
+}
+
+TC - O(n);
+SC - O(n);

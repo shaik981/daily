@@ -1,0 +1,46 @@
+method -1
+int findLongestConseqSubseq(int arr[], int N)
+{
+    sort(arr,arr+N);
+    int max_count = 1,curr_count = 1;
+    int i=0;
+    while(i<N){
+        if(arr[i+1]==arr[i]+1){
+            curr_count++;
+            i++;
+            max_count=max(max_count,curr_count);
+        }else if(arr[i+1]==arr[i]){
+            i++;
+        }else{
+            i++;
+            curr_count=1;
+        }
+    }
+    return max_count;
+}
+
+TC - O(nlogn);
+SC - O(1);
+
+method -2
+int findLongestConseqSubseq(int arr[], int N)
+{
+    unordered_map<int,int> um;
+    for(int i=0;i<N;i++) um[arr[i]]++;
+    int count = 0;
+    for(int i=0;i<N;i++){
+        if(um.find(arr[i]-1)==um.end()){
+            int curr = arr[i];
+            int temp_count = 1;
+            while(um.find(curr+1)!=um.end()){
+                curr++;
+                temp_count++;
+            }
+            count=max(count,temp_count);
+        }
+    }
+    return count;
+}
+
+TC - O(n);
+SC - O(n);

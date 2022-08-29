@@ -1,0 +1,66 @@
+method -1
+int largestRectangleArea(vector<int>& heights) {
+    int ans = 0;
+    int n = heights.size();
+    for(int i=0;i<n;i++){
+        int left = i,right = i;
+        while(left>=0 && heights[left]>=heights[i]) left--;
+        while(right<n && heights[right]>=heights[i]) right++;
+        int area = (right - left - 1)*heights[i];
+        ans = max(ans,area);
+    }
+    return ans;
+}
+
+TC - O(n^2);
+SC - O(1);
+
+method -2
+
+class Solution {
+    vector<int> getNextSmaller(vector<int>& heights, int n) {
+        stack<int> st;
+        vector<int> ans(n);
+        for(int i=n-1;i>=0;i--){
+            int val = heights[i];
+            while(!st.empty() && heights[st.top()]>=val){
+                st.pop();
+            }
+            if(st.empty()) ans[i]=n;
+            else ans[i] = st.top();
+            st.push(i);
+        }
+        return ans;
+    } 
+    
+    vector<int> getPrevSmaller(vector<int>& heights, int n) {
+        stack<int> st;
+        vector<int> ans(n);
+        for(int i=0;i<n;i++){
+            int val = heights[i];
+            while(!st.empty() && heights[st.top()]>=val){
+                st.pop();
+            }
+            if(st.empty()) ans[i]=-1;
+            else ans[i] = st.top();
+            st.push(i);
+        }
+        return ans;
+    } 
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int ans = 0;
+        int n = heights.size();
+        vector<int> prev,next;
+        prev = getPrevSmaller(heights,n);
+        next = getNextSmaller(heights,n);
+        for(int i=0;i<n;i++){
+            int area = (next[i]-prev[i]-1)*heights[i];
+            ans = max(ans,area);
+        }
+        return ans;
+    }
+};
+
+TC - O(n);
+SC - O(n);

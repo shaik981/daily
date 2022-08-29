@@ -1,0 +1,36 @@
+method -1
+long maximumSumSubarray(int K, vector<int> &Arr , int N){
+    // code here 
+    long maxSum = INT_MIN;
+    for(int i=0;i<=N-K;i++){
+        long sum = 0;
+        for(int j=i;j<i+K;j++){
+            sum+=Arr[j];
+        }
+        maxSum = max(maxSum,sum);
+    }
+    return maxSum;
+}
+
+TC - O(n^k);
+SC - O(1);
+
+method -2
+long maximumSumSubarray(int K, vector<int> &Arr , int N){
+    // code here 
+    long maxSum = INT_MIN, sum = 0;
+    int i=0,j=0;
+    while(j<N){
+        sum+=Arr[j];
+        if(j-i+1==K){
+            maxSum = max(maxSum,sum);
+            sum-=Arr[i];
+            i++;
+        }
+        j++;
+    }
+    return maxSum;
+}
+
+TC - O(n);
+SC - O(1);
